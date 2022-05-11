@@ -7,8 +7,8 @@ ARG JAR_FILE=build/libs/api-1.0.0.jar
 # cd /opt/app
 WORKDIR /opt/app
 
-# cp build/libs/api-1.0.0.jar /opt/app/app.jar
-COPY ${JAR_FILE} app.jar
+# cp build/libs/api-1.0.0.jar /opt/app/stock-api.jar
+COPY ${JAR_FILE} stock-api.jar
 
-# java -jar /opt/app/app.jar
-ENTRYPOINT ["java","-jar","app.jar"]
+# java -jar /opt/app/stock-api.jar
+ENTRYPOINT ["java","-jar","stock-api.jar"]
