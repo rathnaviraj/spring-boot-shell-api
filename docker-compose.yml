@@ -3,7 +3,7 @@ services:
   postgres_db:
     image: postgres
     ports:
-      - "5433:5433"
+      - "${DB_PORT}:${DB_PORT}"
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=postgres
@@ -22,7 +22,7 @@ services:
       postgres_db:
         condition: service_healthy
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_db:5432/postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres_db:${DB_PORT}/postgres
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=password
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
