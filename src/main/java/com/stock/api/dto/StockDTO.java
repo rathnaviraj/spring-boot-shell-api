@@ -2,7 +2,6 @@ package com.stock.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class StockDTO {
@@ -11,7 +10,7 @@ public class StockDTO {
 
     private String name;
 
-    private BigDecimal currentPrice;
+    private double currentPrice;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastUpdate;
@@ -32,11 +31,11 @@ public class StockDTO {
         this.name = name;
     }
 
-    public BigDecimal getCurrentPrice() {
+    public double getCurrentPrice() {
         return currentPrice;
     }
 
-    public void setCurrentPrice(double BigDecimal) {
+    public void setCurrentPrice(double currentPrice) {
         this.currentPrice = currentPrice;
     }
 

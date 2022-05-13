@@ -1,5 +1,7 @@
 package com.stock.api.model;
 
+import org.springframework.data.annotation.LastModifiedDate;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -15,7 +17,7 @@ public class Stock {
     private String name;
 
     @Column(name = "current_price")
-    private BigDecimal currentPrice;
+    private double currentPrice;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_update")
@@ -37,11 +39,11 @@ public class Stock {
         this.name = name;
     }
 
-    public BigDecimal getCurrentPrice() {
+    public double getCurrentPrice() {
         return currentPrice;
     }
 
-    public void setCurrentPrice(BigDecimal currentPrice) {
+    public void setCurrentPrice(double currentPrice) {
         this.currentPrice = currentPrice;
     }
 

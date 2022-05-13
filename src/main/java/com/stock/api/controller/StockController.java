@@ -46,8 +46,8 @@ public class StockController {
 
     @CrossOrigin
     @PatchMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody void updateStock(@PathVariable long id){
-        stockService.updateStock(id);
+    public @ResponseBody void updateStock(@PathVariable long id, @RequestBody double price){
+        stockService.updateStock(id, price);
     }
 
     @CrossOrigin

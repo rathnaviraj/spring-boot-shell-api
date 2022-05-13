@@ -16,7 +16,7 @@ public class StockServiceImpl implements StockService {
     private StockDAO stockDAO;
     @Override
     public List<Stock> getStocks() {
-        return null;
+        return stockDAO.getStocks();
     }
 
     @Override
@@ -31,12 +31,15 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public void updateStock(long id) {
-
+    public void updateStock(long id, double price) {
+        Stock stock = stockDAO.findById(id, Stock.class);
+        stock.setCurrentPrice(price);
+        stockDAO.update(stock);
     }
 
     @Override
     public void deleteStock(long id) {
-
+        Stock stock = stockDAO.findById(id, Stock.class);
+        stockDAO.delete(stock);
     }
 }
