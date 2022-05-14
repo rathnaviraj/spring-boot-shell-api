@@ -23,8 +23,9 @@ public class StockController {
 
     @CrossOrigin
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody List<StockDTO> getStocks(){
-        List<Stock> list = stockService.getStocks();
+    public @ResponseBody List<StockDTO> getStocks(@RequestParam int page,
+                                                  @RequestParam(required = false) Integer pageSize){
+        List<Stock> list = stockService.getStocks(page, pageSize);
         return list != null ? list.stream().map(stockMapper::toDTO).collect(Collectors.toList()) : null;
     }
 

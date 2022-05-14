@@ -5,7 +5,7 @@ import com.stock.api.model.Stock;
 import java.util.List;
 
 public interface StockService {
-    List<Stock> getStocks();
+    List<Stock> getStocks(int pageNo, Integer pageSize);
 
     void createStocks(Stock stock);
 
