@@ -31,6 +31,7 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
+    @Transactional
     public void updateStock(long id, double price) {
         Stock stock = stockDAO.findById(id, Stock.class);
         stock.setCurrentPrice(price);
@@ -38,6 +39,7 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
+    @Transactional
     public void deleteStock(long id) {
         Stock stock = stockDAO.findById(id, Stock.class);
         stockDAO.delete(stock);

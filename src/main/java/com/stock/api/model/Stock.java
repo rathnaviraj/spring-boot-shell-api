@@ -1,9 +1,8 @@
 package com.stock.api.model;
 
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
@@ -19,6 +18,7 @@ public class Stock {
     @Column(name = "current_price")
     private double currentPrice;
 
+    @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "last_update")
     private Date lastUpdate;
