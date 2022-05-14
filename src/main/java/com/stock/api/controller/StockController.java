@@ -6,7 +6,9 @@ import com.stock.api.mapper.StockMapperImpl;
 import com.stock.api.model.Stock;
 import com.stock.api.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,5 +55,10 @@ public class StockController {
     @DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody void deleteStock(@PathVariable long id){
         stockService.deleteStock(id);
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public final ResponseEntity<Exception> handleAllExceptions(RuntimeException ex) {
+        return new ResponseEntity<Exception>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
