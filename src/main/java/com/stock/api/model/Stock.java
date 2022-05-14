@@ -20,7 +20,7 @@ public class Stock {
 
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "last_update")
+    @Column(name = "last_update", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date lastUpdate;
 
     public Long getId() {
