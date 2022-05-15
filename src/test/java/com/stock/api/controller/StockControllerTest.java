@@ -52,7 +52,7 @@ class StockControllerTest {
 
     @Test
     void createStocks() {
-        doNothing().when(stockService).createStocks(isA(Stock.class));
+        doNothing().when(stockService).createStock(isA(Stock.class));
 
         try {
             mockMvc.perform(MockMvcRequestBuilders.post("/api/stocks")
