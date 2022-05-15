@@ -64,7 +64,7 @@ public class StockApplicationIntegrationTest {
 
     @Test
     void getStock() throws Exception  {
-        MvcResult result = testGetStock(1l);
+        MvcResult result = testGetStock(3l);
 
         Assertions.assertThat(result).isNotEqualTo(null);
         Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
@@ -74,7 +74,7 @@ public class StockApplicationIntegrationTest {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode actualObj = mapper.readTree(response);
 
-        Stock stock = stockDAO.findById(1l, Stock.class);
+        Stock stock = stockDAO.findById(3l, Stock.class);
 
         Assertions.assertThat(actualObj.get("id").asLong()).isEqualTo(stock.getId());
         Assertions.assertThat(actualObj.get("name").asText()).isEqualTo(stock.getName());

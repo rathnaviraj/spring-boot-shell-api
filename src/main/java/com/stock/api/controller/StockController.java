@@ -1,6 +1,8 @@
 package com.stock.api.controller;
 
+import com.stock.api.dto.ErrorDTO;
 import com.stock.api.dto.StockDTO;
+import com.stock.api.exception.ResourceNotFoundException;
 import com.stock.api.mapper.StockMapper;
 import com.stock.api.mapper.StockMapperImpl;
 import com.stock.api.model.Stock;
@@ -58,7 +60,20 @@ public class StockController {
     }
 
     @ExceptionHandler(RuntimeException.class)
-    public final ResponseEntity<Exception> handleAllExceptions(RuntimeException ex) {
-        return new ResponseEntity<Exception>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+    public final ResponseEntity<ErrorDTO> handleAllExceptions(RuntimeException ex) {
+        ErrorDTO error = new ErrorDTO(ex);
+        error.setTitle("Application Error");
+        error.setInstance("-");
+        error.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        return new ResponseEntity<ErrorDTO>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public final ResponseEntity<ErrorDTO> handleAllExceptions(ResourceNotFoundException ex) {
+        ErrorDTO error = new ErrorDTO(ex);
+        error.setTitle(ex.getTitle());
+        error.setInstance(ex.getResource());
+        error.setStatus(HttpStatus.NOT_FOUND.value());
+        return new ResponseEntity<ErrorDTO>(error, HttpStatus.NOT_FOUND);
     }
 }

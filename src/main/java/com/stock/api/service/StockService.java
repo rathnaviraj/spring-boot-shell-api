@@ -1,5 +1,6 @@
 package com.stock.api.service;
 
+import com.stock.api.exception.ResourceNotFoundException;
 import com.stock.api.model.Stock;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface StockService {
 
     Stock getStock(long id);
 
-    void updateStock(long id, double price);
+    void updateStock(long id, double price) throws ResourceNotFoundException;
 
-    void deleteStock(long id);
+    void deleteStock(long id) throws ResourceNotFoundException;
 }

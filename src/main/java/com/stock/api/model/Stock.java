@@ -1,5 +1,6 @@
 package com.stock.api.model;
 
+import com.stock.api.dto.StockMinimalDTO;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
@@ -8,6 +9,15 @@ import java.util.Date;
 @Entity
 @Table(name = "stock")
 public class Stock {
+
+    public Stock() {
+    }
+
+    public Stock(StockMinimalDTO stockMinimalDTO) {
+        this.name = stockMinimalDTO.getName();
+        this.currentPrice = stockMinimalDTO.getCurrentPrice();
+    }
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;

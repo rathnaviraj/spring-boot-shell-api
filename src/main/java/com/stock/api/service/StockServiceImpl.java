@@ -1,6 +1,7 @@
 package com.stock.api.service;
 
 import com.stock.api.dao.StockDAO;
+import com.stock.api.exception.ResourceNotFoundException;
 import com.stock.api.model.Stock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,16 +39,25 @@ public class StockServiceImpl implements StockService {
 
     @Override
     @Transactional
-    public void updateStock(long id, double price) {
+    public void updateStock(long id, double price) throws ResourceNotFoundException {
         Stock stock = stockDAO.findById(id, Stock.class);
-        stock.setCurrentPrice(price);
-        stockDAO.update(stock);
+        if (stock != null){
+            stock.setCurrentPrice(price);
+            stockDAO.update(stock);
+        } else {
+            throw new ResourceNotFoundException("Resource Not Found", "Requested resource not found to update", id);
+        }
+
     }
 
     @Override
     @Transactional
-    public void deleteStock(long id) {
+    public void deleteStock(long id) throws ResourceNotFoundException {
         Stock stock = stockDAO.findById(id, Stock.class);
-        stockDAO.delete(stock);
+        if (stock != null){
+            stockDAO.delete(stock);
+        } else {
+            throw new ResourceNotFoundException("Resource Not Found", "Requested resource not found to delete", id);
+        }
     }
 }
