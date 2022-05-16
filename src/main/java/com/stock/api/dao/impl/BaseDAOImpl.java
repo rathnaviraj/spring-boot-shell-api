@@ -1,5 +1,6 @@
-package com.stock.api.dao;
+package com.stock.api.dao.impl;
 
+import com.stock.api.dao.BaseDAO;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
@@ -7,7 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Repository
-public class BaseDAOImpl implements BaseDAO{
+public class BaseDAOImpl implements BaseDAO {
 
     @PersistenceContext
     private EntityManager entityManager;

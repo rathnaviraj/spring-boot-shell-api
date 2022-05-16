@@ -1,8 +1,9 @@
-package com.stock.api.service;
+package com.stock.api.service.impl;
 
 import com.stock.api.dao.StockDAO;
 import com.stock.api.exception.ResourceNotFoundException;
 import com.stock.api.model.Stock;
+import com.stock.api.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

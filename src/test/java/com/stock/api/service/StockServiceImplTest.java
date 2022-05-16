@@ -2,6 +2,7 @@ package com.stock.api.service;
 
 import com.stock.api.dao.StockDAO;
 import com.stock.api.model.Stock;
+import com.stock.api.service.impl.StockServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
