@@ -7,6 +7,7 @@ import com.stock.api.model.Stock;
 import com.stock.api.utils.TestUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+@DisplayName("Stock Application Integration Tests")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @AutoConfigureMockMvc
@@ -34,6 +36,7 @@ public class StockApplicationIntegrationTest {
     }
 
     @Test
+    @DisplayName("Stock creation integration test")
     void createStock() throws Exception {
         MvcResult result = testUtils.testCreateStock("{\"name\": \"ABC\", \"currentPrice\": 2.35}");
         Assertions.assertThat(result).isNotEqualTo(null);
@@ -41,6 +44,7 @@ public class StockApplicationIntegrationTest {
     }
 
     @Test
+    @DisplayName("Get stock list with no page size given integration test")
     void getStocksWithNoPageSize() throws Exception {
         MvcResult result = testUtils.testGetStocks("1", null);
         Assertions.assertThat(result).isNotEqualTo(null);
@@ -54,6 +58,7 @@ public class StockApplicationIntegrationTest {
     }
 
     @Test
+    @DisplayName("Get stock list with given page size integration test")
     void getStocksWithPageSize() throws Exception {
         MvcResult result = testUtils.testGetStocks("1", "5");
         Assertions.assertThat(result).isNotEqualTo(null);
@@ -67,6 +72,7 @@ public class StockApplicationIntegrationTest {
     }
 
     @Test
+    @DisplayName("Get stock item by given id integration test")
     void getStock() throws Exception  {
         MvcResult result = testUtils.testGetStock(3l);
 
@@ -86,6 +92,7 @@ public class StockApplicationIntegrationTest {
     }
 
     @Test
+    @DisplayName("Update stock item by given id integration test")
     void updateStock() throws Exception {
         MvcResult result = testUtils.testUpdateStock(2l, "2.25");
 
@@ -97,6 +104,7 @@ public class StockApplicationIntegrationTest {
     }
 
     @Test
+    @DisplayName("Delete stock item by given id integration test")
     void deleteStock() throws Exception {
         MvcResult result = testUtils.testDeleteStock(1l);
 
