@@ -28,7 +28,7 @@ public class StockServiceImpl implements StockService {
 
     @Override
     @Transactional
-    public void createStocks(Stock stock) {
+    public void createStock(Stock stock) {
         stockDAO.save(stock);
     }
 

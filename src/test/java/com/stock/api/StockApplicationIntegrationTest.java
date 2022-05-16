@@ -4,19 +4,17 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stock.api.dao.StockDAO;
 import com.stock.api.model.Stock;
+import com.stock.api.utils.TestUtils;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -29,16 +27,22 @@ public class StockApplicationIntegrationTest {
     @Autowired
     private StockDAO stockDAO;
 
+    private TestUtils testUtils;
+    @BeforeAll
+    void initTestUtils() {
+        this.testUtils = new TestUtils(this.mockMvc);
+    }
+
     @Test
     void createStock() throws Exception {
-        MvcResult result = testCreateStock("{\"name\": \"ABC\", \"currentPrice\": 2.35}");
+        MvcResult result = testUtils.testCreateStock("{\"name\": \"ABC\", \"currentPrice\": 2.35}");
         Assertions.assertThat(result).isNotEqualTo(null);
         Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
     }
 
     @Test
     void getStocksWithNoPageSize() throws Exception {
-        MvcResult result = testGetStocks("1", null);
+        MvcResult result = testUtils.testGetStocks("1", null);
         Assertions.assertThat(result).isNotEqualTo(null);
         Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
 
@@ -51,7 +55,7 @@ public class StockApplicationIntegrationTest {
 
     @Test
     void getStocksWithPageSize() throws Exception {
-        MvcResult result = testGetStocks("1", "5");
+        MvcResult result = testUtils.testGetStocks("1", "5");
         Assertions.assertThat(result).isNotEqualTo(null);
         Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
 
@@ -64,7 +68,7 @@ public class StockApplicationIntegrationTest {
 
     @Test
     void getStock() throws Exception  {
-        MvcResult result = testGetStock(3l);
+        MvcResult result = testUtils.testGetStock(3l);
 
         Assertions.assertThat(result).isNotEqualTo(null);
         Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
@@ -83,7 +87,7 @@ public class StockApplicationIntegrationTest {
 
     @Test
     void updateStock() throws Exception {
-        MvcResult result = testUpdateStock(2l, "2.25");
+        MvcResult result = testUtils.testUpdateStock(2l, "2.25");
 
         Assertions.assertThat(result).isNotEqualTo(null);
         Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
@@ -94,64 +98,12 @@ public class StockApplicationIntegrationTest {
 
     @Test
     void deleteStock() throws Exception {
-        MvcResult result = testDeleteStock(1l);
+        MvcResult result = testUtils.testDeleteStock(1l);
 
         Assertions.assertThat(result).isNotEqualTo(null);
         Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.OK.value());
 
         Stock stock = stockDAO.findById(1l, Stock.class);
         Assertions.assertThat(stock).isNull();
-    }
-
-    private MvcResult testCreateStock(String content) throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/api/stocks")
-                        .content(content)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
-        return result;
-    }
-    private MvcResult testGetStocks(String page, String pageSize) throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/stocks")
-                        .queryParam("page", page)
-                        .queryParam("pageSize", pageSize)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        return result;
-    }
-
-    private MvcResult testGetStock(long id) throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get(String.format("/api/stocks/%d", id))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        return result;
-    }
-
-    private MvcResult testUpdateStock(long id, String value) throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.patch(String.format("/api/stocks/%d", id))
-                        .content(value)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        return result;
-    }
-
-    private MvcResult testDeleteStock(long id) throws Exception {
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.delete(String.format("/api/stocks/%d", id))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        return result;
     }
 }

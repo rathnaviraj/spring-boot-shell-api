@@ -16,10 +16,6 @@ public class BaseDAOImpl implements BaseDAO{
         return entityManager.unwrap(Session.class);
     }
 
-    public EntityManager getEntityManager() {
-        return entityManager;
-    }
-
     @Override
     public <T> T findById(long id, Class<T> tClass) {
         return getSession().get(tClass, id);
@@ -28,11 +24,6 @@ public class BaseDAOImpl implements BaseDAO{
     @Override
     public <T> void save(final T t) {
         getSession().persist(t);
-    }
-
-    @Override
-    public <T> void saveOrUpdate(final T t) {
-        getSession().saveOrUpdate(t);
     }
 
     @Override

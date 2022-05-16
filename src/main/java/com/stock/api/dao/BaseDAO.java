@@ -6,8 +6,6 @@ public interface BaseDAO {
 
     <T> void save(T t);
 
-    <T> void saveOrUpdate(T t);
-
     <T> void update(T t);
 
     <T> void delete(T t);

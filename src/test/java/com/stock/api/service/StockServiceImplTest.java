@@ -39,7 +39,7 @@ class StockServiceImplTest {
     void createStocks() {
         doNothing().when(stockDAO).save(isA(Stock.class));
         Stock stock = new Stock();
-        stockService.createStocks(stock);
+        stockService.createStock(stock);
     }
 
     @Test
