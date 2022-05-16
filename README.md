@@ -43,7 +43,7 @@ Page size of the stock listing endpoint could be configurable using environment 
 
 To configure the value in docker configuration modify the desired page size in `docker-compose.yml` 
 
-> DEFAULT_PAGE_SIZE=<page-size-value>
+> DEFAULT_PAGE_SIZE=page-size-value
 
 # Versions
 
